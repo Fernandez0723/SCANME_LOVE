@@ -11,12 +11,50 @@
       width: 200px;
       max-width: 80%;
       border-radius: 15px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    .center {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    /* Prototype notice styling */
+    .prototype-notice {
+      font-size: 1em;
+      font-weight: bold;
+      color: #ff0000; /* red for visibility */
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      margin: 10px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #f1c40f; /* Minions yellow */
+      color: #0052cc; /* Minions blue text */
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
   <div class="center">
+    <!-- Prototype notice -->
+    <div class="prototype-notice">PROTOTYPE ONLY - For Testing Purposes</div>
+
     <!-- Video instead of image -->
     <video class="welcome-video" autoplay loop muted playsinline>
       <source src="images/videoplayback (3).mp4" type="video/mp4">
