@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -17,7 +16,7 @@
 
 body{
     font-family:'Montserrat',sans-serif;
-    height:100vh;
+    min-height:100vh;
     overflow:hidden;
     background:black;
 }
@@ -26,7 +25,7 @@ body{
 .gallery{
     position:relative;
     width:100%;
-    height:100vh;
+    min-height:100vh;
 }
 
 /* IMAGES */
@@ -41,7 +40,8 @@ body{
 .slide img{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:cover; /* maintain aspect ratio and fill */
+    object-position:center center; /* always center */
 }
 
 /* DIFFERENT DELAYS */
@@ -54,7 +54,7 @@ body{
 @keyframes fadeSlide{
     0%{
         opacity:0;
-        transform:scale(1.1);
+        transform:scale(1.05);
     }
     10%{
         opacity:1;
@@ -79,6 +79,7 @@ body{
     animation:floatHeart linear infinite;
 }
 
+/* FLOAT HEART */
 @keyframes floatHeart{
     0%{
         transform:translateY(0) scale(1);
@@ -90,6 +91,27 @@ body{
     }
 }
 
+/* RESPONSIVE */
+
+/* Tablets */
+@media (max-width:1024px){
+    .heart{
+        font-size:18px;
+    }
+}
+
+/* Mobile */
+@media(max-width:768px){
+    .heart{
+        font-size:16px;
+    }
+}
+
+@media(max-width:480px){
+    .heart{
+        font-size:14px;
+    }
+}
 </style>
 </head>
 
@@ -103,7 +125,6 @@ body{
 
 <!-- IMAGE GALLERY -->
 <div class="gallery">
-
     <div class="slide">
         <img src="images/b959dbc9-c842-4ba0-a21d-ff07cb15d835.jpg" alt="Slide 1">
     </div>
@@ -119,18 +140,26 @@ body{
     <div class="slide">
         <img src="images/8fd43986-d204-4f18-9fe0-e9cb0397f7b3.jpg" alt="Slide 4">
     </div>
-
 </div>
 
 <script>
-
 /* HEART GENERATOR */
 function createHeart(){
     const heart=document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML="❤️";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(20+Math.random()*20)+"px";
+
+    // adjust size based on screen width
+    let screenWidth = window.innerWidth;
+    if(screenWidth>1024){
+        heart.style.fontSize=(20+Math.random()*20)+"px";
+    } else if(screenWidth>768){
+        heart.style.fontSize=(15+Math.random()*10)+"px";
+    } else {
+        heart.style.fontSize=(12+Math.random()*8)+"px";
+    }
+
     heart.style.animationDuration=(3+Math.random()*3)+"s";
     document.body.appendChild(heart);
 
@@ -140,9 +169,7 @@ function createHeart(){
 }
 
 setInterval(createHeart,500);
-
 </script>
 
 </body>
 </html>
-
