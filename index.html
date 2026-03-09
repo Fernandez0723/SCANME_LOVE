@@ -9,16 +9,46 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
     font-family:'Montserrat',sans-serif;
     height:100vh;
     overflow:hidden;
+
+    /* BACKGROUND IMAGE WITH SOFT OVERLAY */
     background: 
         linear-gradient(rgba(255,182,193,0.3), rgba(255,182,193,0.3)),
         url('Screenshot 2026-03-09 131651.png') no-repeat center center;
     background-size:cover;
 }
 
+/* MUSIC CONTROL BUTTONS */
+#musicControls{
+    position:fixed;
+    top:20px;
+    left:20px;
+    z-index:20;
+    display:flex;
+    gap:10px;
+}
+
+#musicControls button{
+    padding:8px 14px;
+    border:none;
+    border-radius:8px;
+    background:#ff2e63;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 4px 6px rgba(0,0,0,0.3);
+    transition:0.2s;
+}
+
+#musicControls button:hover{
+    transform:scale(1.1);
+}
+
+/* FULLSCREEN GALLERY */
 .gallery{
     position:relative;
     width:100%;
@@ -28,6 +58,7 @@ body{
     align-items:center;
 }
 
+/* SLIDE */
 .slide{
     position:absolute;
     width:100%;
@@ -60,26 +91,7 @@ body{
     100%{opacity:0;}
 }
 
-.love-center{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    font-size:3em;
-    font-weight:700;
-    color:#ff2e63;
-    text-shadow:
-        2px 2px 0px white,
-        4px 4px 15px rgba(0,0,0,0.4);
-    letter-spacing:2px;
-    text-align:center;
-    z-index:10;
-    font-family: 'Fredoka', sans-serif;
-    padding:10px 20px;
-    border-radius:25px;
-    background: rgba(255,255,255,0.05);
-}
-
+/* HEARTS */
 .heart{
     position:absolute;
     bottom:-50px;
@@ -95,41 +107,30 @@ body{
 
 @media (max-width:1024px){
     .heart{font-size:18px;}
-    .love-center{font-size:2.5em; padding:8px 16px;}
 }
 @media(max-width:768px){
     .heart{font-size:16px;}
-    .love-center{font-size:2em; padding:6px 12px;}
 }
 @media(max-width:480px){
     .heart{font-size:14px;}
-    .love-center{font-size:1.5em; padding:5px 10px;}
 }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop autoplay muted>
-  <source src="El Manu & Jessy Kang - Tahanan (Wedding Version) (Lyrics).mp3" type="audio/mpeg">
+<!-- MUSIC CONTROLS -->
+<div id="musicControls">
+    <button id="playBtn">Play</button>
+    <button id="stopBtn">Stop</button>
+</div>
+
+<!-- AUDIO ELEMENT -->
+<audio id="bgMusic" loop>
+    <source src="El Manu & Jessy Kang - Tahanan (Wedding Version) (Lyrics).mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
 </audio>
 
-<script>
-const music = document.getElementById('bgMusic');
-
-window.addEventListener('load', () => {
-    // Play muted music first
-    music.play().catch(e => console.log("Autoplay muted", e));
-    
-    // Unmute on first click/tap anywhere
-    document.body.addEventListener('click', function unmute() {
-        music.muted = false;
-        music.play();
-        document.body.removeEventListener('click', unmute);
-    });
-});
-</script>
-<!--<div class="love-center">Our Memories ❤️</div>-->
-
+<!-- IMAGE GALLERY -->
 <div class="gallery">
     <div class="slide"><img src="images/b959dbc9-c842-4ba0-a21d-ff07cb15d835.jpg" alt="Slide 1"></div>
     <div class="slide"><img src="images/3809fd1d-9420-4b1b-9f18-58d72aa67849.jpg" alt="Slide 2"></div>
@@ -157,30 +158,16 @@ function createHeart(){
 
 setInterval(createHeart,500);
 
-/* SMOOTH AUTOPLAY MUSIC */
-window.addEventListener('load', async () => {
-    const music = document.getElementById('bgMusic');
-
-    try {
-        // Resume AudioContext
-        const AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (AudioCtx.state === 'suspended') await AudioCtx.resume();
-
-        // Play music immediately
-        await music.play();
-
-        // Optional: smooth fade-in
-        music.volume = 0;
-        let vol = 0;
-        const fadeIn = setInterval(()=>{
-            if(vol<1){ vol+=0.02; music.volume = vol; }
-            else{ clearInterval(fadeIn); }
-        }, 100);
-    } catch(e){
-        console.log("Autoplay failed, may need user interaction", e);
-    }
+/* MUSIC PLAY & STOP */
+const bgMusic = document.getElementById('bgMusic');
+document.getElementById('playBtn').addEventListener('click', ()=>{
+    bgMusic.play();
+});
+document.getElementById('stopBtn').addEventListener('click', ()=>{
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
 });
 </script>
+
 </body>
 </html>
-
